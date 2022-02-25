@@ -13,6 +13,7 @@ namespace HotelBooking
         public string Summary { get; set; }
         public string et8yrWlaLa { get; set; }
         public string h5555555555555 { get; set; }
+        Console.WriteLine("kosom 7yate");
 
     }
 }
