@@ -29,6 +29,13 @@ namespace HotelBooking
         public void ConfigureServices(IServiceCollection services)
         {
 
+
+            services.AddEntityFrameworkSqlServer();
+            services.AddDbContextPool<hotelsprojectContext>((serviceProvider, optionsBuilder) =>
+            {
+                optionsBuilder.UseSqlServer("...");
+                optionsBuilder.UseInternalServiceProvider(serviceProvider);
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

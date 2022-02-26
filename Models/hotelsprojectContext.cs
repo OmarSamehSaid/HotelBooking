@@ -8,14 +8,12 @@ namespace HotelBooking.Models
 {
     public partial class hotelsprojectContext : DbContext
     {
-        public hotelsprojectContext()
-        {
-        }
+       
 
         public hotelsprojectContext(DbContextOptions<hotelsprojectContext> options)
             : base(options)
-        {
-        }
+        { }
+        
 
         public virtual DbSet<Photo> Photos { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
