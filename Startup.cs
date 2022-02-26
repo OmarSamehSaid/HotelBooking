@@ -28,6 +28,7 @@ namespace HotelBooking
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContextPool<hotelsprojectContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("ProjectDbConnection")));
 
 
             services.AddEntityFrameworkSqlServer();
@@ -41,7 +42,6 @@ namespace HotelBooking
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelBooking", Version = "v1" });
             });
-            services.AddDbContextPool<hotelsprojectContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("ProjectDbConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
