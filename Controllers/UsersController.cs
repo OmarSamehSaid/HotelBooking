@@ -29,6 +29,18 @@ namespace HotelBooking.Controllers
             return await _context.Users.Where(a => a.Isdeleted != true).Select(a => a).ToListAsync();
         }
 
+        [HttpGet("~/api/Users/Client")]
+        public async Task<ActionResult<IEnumerable<User>>> GetClients()
+        {
+            return await _context.Users.Where(a => a.Isdeleted != true && a.Role=="client").Select(a => a).ToListAsync();
+        }
+        [HttpGet("~/api/Users/Hotel")]
+        public async Task<ActionResult<IEnumerable<User>>> GetHotels()
+        {
+            return await _context.Users.Where(a => a.Isdeleted != true && a.Role == "hotel").Select(a => a).ToListAsync();
+        }
+
+
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
