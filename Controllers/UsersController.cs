@@ -140,9 +140,25 @@ namespace HotelBooking.Controllers
         //    return NoContent();
         //}
 
+        [HttpGet("~/api/Hotel/Name")]
+        public async Task<ActionResult<IEnumerable<User>>> GetHotelByName(string name)
+        {
+            return await _context.Users.Where(a => a.Role == "hotel" && a.Isdeleted != true && EF.Functions.Like(a.Name, $"%{name}%")).Select(a => a).ToListAsync();
+
+        }
+
+        [HttpGet("~/api/Hotel/Address")]
+        public async Task<ActionResult<IEnumerable<User>>> GetHotelByAddress(string address)
+        {
+            return await _context.Users.Where(a => a.Role == "hotel" && a.Isdeleted != true && EF.Functions.Like(a.Address, $"%{address}%")).Select(a => a).ToListAsync();
+
+        }
+
+
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Userid == id);
         }
+
     }
 }
