@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelBooking.Models;
+using HotelBooking.bl.Repository;
 
 namespace HotelBooking.Controllers
 {
@@ -14,22 +15,23 @@ namespace HotelBooking.Controllers
     public class UsersController : ControllerBase
     {
         private readonly hotelsprojectContext _context;
-
         public UsersController(hotelsprojectContext context)
         {
             _context = context;
+
         }
+
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Where(a => a.Isdeleted != true).Select(a => a).ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUserById(int id)
         {
             var user = await _context.Users.FindAsync(id);
 
@@ -72,32 +74,71 @@ namespace HotelBooking.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        [HttpPut("~/api/Users/delete/{id}")]
+        public async Task<IActionResult> DelUser(int id)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            var user = _context.Users.Where(a => a.Userid == id).FirstOrDefault();          
 
-            return CreatedAtAction("GetUser", new { id = user.Userid }, user);
-        }
+            user.Isdeleted = true;
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            _context.Entry(user).State = EntityState.Modified;
+
+            try
             {
-                return NotFound();
+                await _context.SaveChangesAsync();
             }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return NoContent();
         }
+
+
+        //// POST: api/Users
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<User>> PostUser(User user)
+        //{
+        //    _context.Users.Add(user);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction("GetUser", new { id = user.Userid }, user);
+        //}
+
+        [HttpPost]
+        public IActionResult CreateUser(User user)
+        {
+            user.Isdeleted = false;
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            return Ok(user);
+
+        }
+
+        //// DELETE: api/Users/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteUser(int id)
+        //{
+        //    var user = await _context.Users.FindAsync(id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _context.Users.Remove(user);
+        //    await _context.SaveChangesAsync();
+
+        //    return NoContent();
+        //}
 
         private bool UserExists(int id)
         {

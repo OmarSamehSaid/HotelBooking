@@ -1,4 +1,5 @@
 using HotelBooking.Models;
+using HotelBooking.bl.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,20 +29,22 @@ namespace HotelBooking
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+     
             services.AddDbContextPool<hotelsprojectContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("ProjectDbConnection")));
-
-
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelBooking", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
             services.AddEntityFrameworkSqlServer();
             services.AddDbContextPool<hotelsprojectContext>((serviceProvider, optionsBuilder) =>
             {
                 optionsBuilder.UseSqlServer("...");
                 optionsBuilder.UseInternalServiceProvider(serviceProvider);
             });
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelBooking", Version = "v1" });
-            });
+   
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

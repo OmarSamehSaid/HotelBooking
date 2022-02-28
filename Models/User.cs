@@ -15,6 +15,7 @@ namespace HotelBooking.Models
             Rooms = new HashSet<Room>();
         }
 
+
         public int Userid { get; set; }
         public string Role { get; set; }
         public string Name { get; set; }

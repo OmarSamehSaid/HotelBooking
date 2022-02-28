@@ -15,11 +15,11 @@ namespace HotelBooking.bl.Repository
             this.DB = DB;
         }
 
-        public IEnumerable<User> Get()
-        {
-            var data = DB.Users.Where(a => a.Isdeleted != false).Select(a => a);
-            return data;
-        }
+        //public IEnumerable<User> Get()
+        //{
+        //    var data = DB.Users.Where(a => a.Isdeleted != false).Select(a => a);
+        //    return data;
+        //}
 
         public void Add(User user)
         {
@@ -27,16 +27,16 @@ namespace HotelBooking.bl.Repository
             DB.SaveChanges();
         }
 
-        private User GetUserById(int Id)
-        {
-            return DB.Users.Where(a => a.Userid == Id).FirstOrDefault();
-        }
+        //private User GetUserById(int Id)
+        //{
+        //    return DB.Users.Where(a => a.Userid == Id).FirstOrDefault();
+        //}
 
-        public User GetById(int Id)
-        {
-            User data = GetUserById(Id);
-            return data;
-        }
+        //public User GetById(int Id)
+        //{
+        //    User data = GetUserById(Id);
+        //    return data;
+        //}
 
         public void Update(User user)
         {
