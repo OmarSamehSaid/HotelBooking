@@ -19,6 +19,13 @@ namespace HotelBooking.Controllers
         {
             _context = context;
         }
+        // GET: api/Rooms
+        [HttpGet("~/api/Reservations/client/{clientId}")]
+        public async Task<ActionResult<IEnumerable<Reservation>>> GetReservationsByClientId(int clientId)
+        {
+            return await _context.Reservations.Where(a => a.Isdeleted != true && a.Clientid == clientId).Select(a => a).ToListAsync();
+
+        }
 
         // GET: api/Reservations
         [HttpGet]
@@ -95,11 +102,11 @@ namespace HotelBooking.Controllers
         [HttpPut("~/api/Reservations/delete/{id}")]
         public async Task<IActionResult> DelReservation(int id)
         {
-            var reservation = _context.Reservations.Where(a => a.Reserveid == id).FirstOrDefault();
+            var reserve = _context.Reservations.Where(a => a.Reserveid == id).FirstOrDefault();
 
-            reservation.Isdeleted = true;
+            reserve.Isdeleted = true;
 
-            _context.Entry(reservation).State = EntityState.Modified;
+            _context.Entry(reserve).State = EntityState.Modified;
 
             try
             {
