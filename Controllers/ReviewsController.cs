@@ -31,6 +31,18 @@ namespace HotelBooking.Controllers
         {
             return await _context.Reviews.Where(a=>a.Hotelid == hotelid && a.Isdeleted != true).ToListAsync();
         }
+        // GET: api/Reviews
+        [HttpGet("~/api/Reviews/Hotel/Happy")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetHappyReviewsByHotelId(int hotelid)
+        {
+            return await _context.Reviews.Where(a => a.Hotelid == hotelid && a.Isdeleted != true && a.Ishappy=="happy").ToListAsync();
+        }
+        // GET: api/Reviews
+        [HttpGet("~/api/Reviews/Hotel/NotHappy")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetNotHappyReviewsByHotelId(int hotelid)
+        {
+            return await _context.Reviews.Where(a => a.Hotelid == hotelid && a.Isdeleted != true && a.Ishappy == "not happy").ToListAsync();
+        }
 
         // GET: api/Reviews/5
         [HttpGet("{id}")]
