@@ -41,6 +41,14 @@ namespace HotelBooking.Controllers
             return await _context.Users.Where(a => a.Isdeleted != true && a.Role == "hotel").Select(a => a).ToListAsync();
         }
 
+
+        //[HttpGet("~/api/Users/Login")]
+        //public IActionResult Login(string email,string password)
+        //{
+        //    var user = _context.Users.Where(a => a.Isdeleted != true && a.Email == email && a.Password == password).Select(a => a).ToListAsync();
+        //    return Ok(user);
+
+        //}
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
