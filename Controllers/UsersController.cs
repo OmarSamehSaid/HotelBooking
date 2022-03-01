@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelBooking.Models;
-using HotelBooking.bl.Repository;
 
 namespace HotelBooking.Controllers
 {
