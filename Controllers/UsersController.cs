@@ -172,6 +172,11 @@ namespace HotelBooking.Controllers
             return await _context.Users.Where(a => a.Role == "hotel" && a.Isdeleted != true && EF.Functions.Like(a.Address, $"%{address}%")).Select(a => a).ToListAsync();
 
         }
+        [HttpPost("~/api/login")]
+        public IActionResult Authenticate(UserCred usercred)
+        {
+           return Ok();
+        }
 
 
         private bool UserExists(int id)
