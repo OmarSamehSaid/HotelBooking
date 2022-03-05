@@ -34,6 +34,13 @@ namespace HotelBooking.Controllers
             return await _context.Users.Where(a => a.Isdeleted != true && a.Role=="client").Select(a => a).ToListAsync();
         }
 
+        [HttpGet("~/api/Users/Login")]
+        public async Task<ActionResult<IEnumerable<User>>> Login(User user)
+        {
+            return await _context.Users.Where(a => a.Isdeleted != true && a.Email == user.Email && a.Password == user.Password).Select(a => a).ToListAsync();
+        }
+
+
         [HttpGet("~/api/Users/Hotel")]
         public async Task<ActionResult<IEnumerable<User>>> GetHotels()
         {
@@ -93,10 +100,12 @@ namespace HotelBooking.Controllers
             return NoContent();
         }
 
-        [HttpPut("~/api/Users/delete/{id}")]
+
+
+        [HttpPut("~/api/Users/delete")]
         public async Task<IActionResult> DelUser(int id)
         {
-            var user = _context.Users.Where(a => a.Userid == id).FirstOrDefault();          
+            var user = _context.Users.Where(a => a.Userid == id).FirstOrDefault();
 
             user.Isdeleted = true;
 
@@ -120,6 +129,7 @@ namespace HotelBooking.Controllers
 
             return NoContent();
         }
+
 
 
         //// POST: api/Users
@@ -172,12 +182,7 @@ namespace HotelBooking.Controllers
             return await _context.Users.Where(a => a.Role == "hotel" && a.Isdeleted != true && EF.Functions.Like(a.Address, $"%{address}%")).Select(a => a).ToListAsync();
 
         }
-        [HttpPost("~/api/login")]
-        public IActionResult Authenticate(UserCred usercred)
-        {
-           return Ok();
-        }
-
+   
 
         private bool UserExists(int id)
         {
