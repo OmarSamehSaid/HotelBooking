@@ -146,10 +146,18 @@ namespace HotelBooking.Controllers
         [HttpPost]
         public IActionResult CreateUser(User user)
         {
-            user.Isdeleted = false;
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            return Ok(user);
+            var data = _context.Users.Any(e => e.Email == user.Email);
+            if (!data)
+            {
+                user.Isdeleted = false;
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                return Ok(user);
+            }
+            else
+            {
+                return Ok("Email already exist");
+            }
 
         }
 
