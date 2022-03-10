@@ -30,7 +30,13 @@ namespace HotelBooking.Controllers
         [HttpGet("~/api/Rooms/Hotel/{id}")]
         public async Task<ActionResult<IEnumerable<Room>>> GetRoomsbyHotel(int id)
         {
-            return await _context.Rooms.Where(a => a.Isdeleted != true && a.Hotelid == id).Select(a => a).ToListAsync();
+            return await _context.Rooms.Where(a => a.Isdeleted != true && a.Hotelid == id && a.Isreserved == false).Select(a => a).ToListAsync();
+
+        }
+        [HttpGet("~/api/Rooms/Hotel/reserved/{Hotelid}")]
+        public async Task<ActionResult<IEnumerable<Room>>> GetReservedRoomsbyHotel(int id)
+        {
+            return await _context.Rooms.Where(a => a.Isdeleted != true && a.Hotelid == id && a.Isreserved == true).Select(a => a).ToListAsync();
 
         }
 
