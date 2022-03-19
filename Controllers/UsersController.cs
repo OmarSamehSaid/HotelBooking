@@ -35,10 +35,10 @@ namespace HotelBooking.Controllers
         }
 
         [HttpGet("~/api/Users/Login")]
-        public  Task<ActionResult<User>> Login(string email, string password)
+        public async Task<ActionResult<IEnumerable<User>>> Login(string email, string password)
         {
-           var user =  _context.Users.Where(a => a.Isdeleted != true && a.Email == email && a.Password == password).Select(a => a).First();
-            return  user;
+            return await _context.Users.Where(a => a.Isdeleted != true && a.Email == email && a.Password == password).Select(a => a).ToListAsync();
+
         }
 
 
