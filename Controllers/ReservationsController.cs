@@ -23,6 +23,7 @@ namespace HotelBooking.Controllers
         [HttpGet("~/api/Reservations/client/{clientId}")]
         public async Task<ActionResult<IEnumerable<Reservation>>> GetReservationsByClientId(int clientId)
         {
+
             return await _context.Reservations.Where(a => a.Isdeleted != true && a.Clientid == clientId).Select(a => a).ToListAsync();
 
         }
