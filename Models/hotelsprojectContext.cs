@@ -65,6 +65,17 @@ namespace HotelBooking.Models
 
                 entity.Property(e => e.Roomid).HasColumnName("roomid");
 
+                entity.Property(e => e.Startdate)
+    .HasMaxLength(50)
+    .HasColumnName("startdate");
+
+                entity.Property(e => e.Enddate)
+    .HasMaxLength(50)
+    .HasColumnName("enddate");
+
+                entity.Property(e => e.Totalcost).HasColumnName("totalcost");
+
+
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Reservations)
                     .HasForeignKey(d => d.Clientid)

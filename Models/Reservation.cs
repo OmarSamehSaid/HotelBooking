@@ -12,6 +12,11 @@ namespace HotelBooking.Models
         public int Roomid { get; set; }
         public bool? Isdeleted { get; set; }
 
+        public string? Startdate { get; set; }
+        public string? Enddate { get; set; }
+
+        public float? Totalcost { get; set; }
+
         public virtual User Client { get; set; }
         public virtual Room Room { get; set; }
     }
