@@ -129,6 +129,11 @@ namespace HotelBooking.Models
                     .HasMaxLength(50)
                     .HasColumnName("time");
 
+                entity.Property(e => e.Type)
+                    .HasMaxLength(50)
+                    .HasColumnName("type");
+
+
                 entity.HasOne(d => d.Hotel)
                     .WithMany(p => p.Rooms)
                     .HasForeignKey(d => d.Hotelid)

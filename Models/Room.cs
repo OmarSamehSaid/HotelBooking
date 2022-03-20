@@ -18,6 +18,7 @@ namespace HotelBooking.Models
         public bool? Isreserved { get; set; }
         public int? Cost { get; set; }
         public string Time { get; set; }
+        public string Type { get; set; }
         public bool? Isdeleted { get; set; }
 
         public virtual User Hotel { get; set; }
