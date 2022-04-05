@@ -74,6 +74,7 @@ namespace HotelBooking.Models
     .HasColumnName("enddate");
 
                 entity.Property(e => e.Totalcost).HasColumnName("totalcost");
+                entity.Property(e => e.Number).HasColumnName("number");
 
 
                 entity.HasOne(d => d.Client)
