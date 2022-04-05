@@ -15,7 +15,7 @@ namespace HotelBooking.Models
         public string? Startdate { get; set; }
         public string? Enddate { get; set; }
 
-        public float? Totalcost { get; set; }
+        public double? Totalcost { get; set; }
         public int? Number { get; set; }
 
         public virtual User Client { get; set; }
