@@ -186,6 +186,9 @@ namespace HotelBooking.Models
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("role");
+                entity.Property(e => e.Phone).HasColumnName("phone");
+                entity.Property(e => e.Lng).HasColumnName("lng");
+                entity.Property(e => e.Lat).HasColumnName("lat");
             });
 
             OnModelCreatingPartial(modelBuilder);
