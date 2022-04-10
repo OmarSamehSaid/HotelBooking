@@ -28,6 +28,36 @@ namespace HotelBooking.Controllers
 
         }
 
+        [HttpGet("~/api/Reservations/hotel/{hotelId}")]
+        public async Task<ActionResult<IEnumerable<MyClass>>> GetReservationsByHotelId(int HotelId)
+        {
+            return await _context.Reservations.Join(_context.Rooms, a => a.Roomid, b => b.Roomid, (a, b) => new
+            {
+                reserveid = a.Reserveid,
+                clientid = a.Clientid,
+                roomid = a.Roomid,
+                isdeleted = a.Isdeleted,
+                startdate = a.Startdate,
+                enddate = a.Enddate,
+                totalcost = a.Totalcost,
+                number = a.Number,
+                hotelid = b.Hotelid
+
+            }).Where(x => x.isdeleted != true && x.hotelid == HotelId).Select(x => new MyClass()
+            {
+                Reserveid = x.reserveid,
+                Clientid = x.clientid,
+                Roomid = x.roomid,
+                Isdeleted = x.isdeleted,
+                Startdate = x.startdate,
+                Enddate = x.enddate,
+                Totalcost = x.totalcost,
+                Number = x.number,
+                Hotelid = x.hotelid
+            }).ToListAsync();
+
+        }
+
         // GET: api/Reservations
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations()
@@ -132,6 +162,21 @@ namespace HotelBooking.Controllers
         private bool ReservationExists(int id)
         {
             return _context.Reservations.Any(e => e.Reserveid == id);
+        }
+
+        public class MyClass
+        {
+            public int Reserveid { get; set; }
+            public int Clientid { get; set; }
+            public int Roomid { get; set; }
+            public bool? Isdeleted { get; set; }
+
+            public string? Startdate { get; set; }
+            public string? Enddate { get; set; }
+
+            public double? Totalcost { get; set; }
+            public int? Number { get; set; }
+            public int Hotelid { get; set; }
         }
     }
 }
