@@ -24,7 +24,7 @@ namespace HotelBooking.Models
         public bool? Isdeleted { get; set; }
         public string Photo { get; set; }
         public string Address { get; set; }
-        public int? Phone { get; set; }
+        public string Phone { get; set; }
         public double? Lng { get; set; }
         public double? Lat { get; set; }
 
