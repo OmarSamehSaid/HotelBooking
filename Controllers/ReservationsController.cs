@@ -29,7 +29,7 @@ namespace HotelBooking.Controllers
         }
 
         [HttpGet("~/api/Reservations/hotel/{hotelId}")]
-        public async Task<ActionResult<IEnumerable<MyClass>>> GetReservationsByHotelId(int HotelId)
+        public async Task<ActionResult<IEnumerable<MyClass>>> GetReservationsByHotelId(int hotelId)
         {
             return await _context.Reservations.Join(_context.Rooms, a => a.Roomid, b => b.Roomid, (a, b) => new
             {
@@ -43,7 +43,7 @@ namespace HotelBooking.Controllers
                 number = a.Number,
                 hotelid = b.Hotelid
 
-            }).Where(x => x.isdeleted != true && x.hotelid == HotelId).Select(x => new MyClass()
+            }).Where(x => x.isdeleted != true && x.hotelid == hotelId).Select(x => new MyClass()
             {
                 Reserveid = x.reserveid,
                 Clientid = x.clientid,
