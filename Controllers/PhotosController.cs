@@ -21,10 +21,10 @@ namespace HotelBooking.Controllers
         }
 
         // GET: api/Photos
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Photo>>> GetPhotosByRoomId(int id)
+        [HttpGet("~/api/Photos/room/{roomId}")]
+        public async Task<ActionResult<IEnumerable<Photo>>> GetPhotosByRoomId(int roomId)
         {
-            return await _context.Photos.Where(a => a.Roomid ==  id).Select(a => a).ToListAsync();
+            return await _context.Photos.Where(a => a.Roomid == roomId).Select(a => a).ToListAsync();
         }
 
         // GET: api/Photos/5
